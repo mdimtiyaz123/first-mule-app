@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="a613e0fd-059d-42ef-b652-9a5cbea8d8c3" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<http:listener-config name="HTTP_Listener_config1" doc:name="HTTP Listener config" doc:id="708d0bab-e2fe-4c2f-a9b1-db07a264179d" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="choicerouterFlow" doc:id="621431ab-b6f5-433a-8654-dae2222d92da" >
+		<http:listener doc:name="Listener" doc:id="10e8d8ce-4f50-490a-b916-20923ee5f7da" config-ref="HTTP_Listener_config1" path="/choice"/>
+		<choice doc:name="Choice" doc:id="5666fda1-1af0-48c6-a1df-2bdce58eab5a" >
+			<when expression='payload == "1"'>
+				<logger level="INFO" doc:name="Logger" doc:id="36d6c7e3-9886-4510-b166-44580ae518f2" message="#[logger1]"/>
+			</when>
+			<when expression='payload == "2"'>
+				<logger level="INFO" doc:name="Logger" doc:id="ecf81854-426c-408f-87d9-6915c7bc3041" message="#[logger2]"/>
+			</when>
+			<otherwise >
+				<logger level="INFO" doc:name="Logger" doc:id="9e2c3f19-8f6f-44b5-87b2-1411eb1dfa90" message="#[logger3]"/>
+			</otherwise>
+		</choice>
+	</flow>
+</mule>
